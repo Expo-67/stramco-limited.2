@@ -1,15 +1,21 @@
 import { StatsCard } from "../components/stats-card";
+import Image from "next/image";
+import backgroundImage from "../images/back 2.jpg";
 
 export function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center justify-center">
       {/* Background Image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/modern-office-space-with-glass-windows-and-contemp.png')`,
-        }}
-      />
+      <div className="absolute inset-0 bg-cover bg-center bg-no-repeat">
+        <Image
+          src={backgroundImage}
+          alt="Background"
+          className="w-full h-full object-cover"
+          priority
+          fill
+        />
+        <div className="absolute inset-0 bg-black/60"></div>
+      </div>
 
       {/* Content */}
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

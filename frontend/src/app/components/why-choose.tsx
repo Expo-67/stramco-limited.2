@@ -29,13 +29,13 @@ export function WhyChoose() {
   ];
 
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16 bg-[#F3F4F6]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl font-bold text-[#111827] mb-4">
             Why Choose Stramco Solutions?
           </h2>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-[#9CA3AF]">
             We deliver exceptional results through strategic expertise and
             personalized service
           </p>
@@ -44,13 +44,15 @@ export function WhyChoose() {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature, index) => (
             <div key={index} className="text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
-                <feature.icon className="w-8 h-8 text-blue-600" />
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-[#3B82F6] to-[#60A5FA] rounded-full mb-4">
+                <feature.icon className="w-8 h-8 text-white" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              <h3 className="text-xl font-semibold text-[#111827] mb-2">
                 {feature.title}
               </h3>
-              <p className="text-gray-600 text-pretty">{feature.description}</p>
+              <p className="text-[#9CA3AF] text-pretty">
+                {feature.description}
+              </p>
             </div>
           ))}
         </div>

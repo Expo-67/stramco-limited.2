@@ -1,12 +1,41 @@
+"use client";
+
+import Image from "next/image";
+import {
+  Briefcase,
+  Users,
+  GraduationCap,
+  ClipboardList,
+  Mail,
+  Phone,
+  MapPin,
+  Linkedin,
+  Twitter,
+  Facebook,
+  Instagram,
+} from "lucide-react";
+import logo from "../images/logo-black.png";
+
 export function Footer() {
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="bg-[#111827] text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div>
-            <h3 className="text-xl font-bold mb-4">Stramco Solutions</h3>
-            <p className="text-gray-300 mb-4">
+            <div className="flex items-center space-x-3 flex-shrink-0 mb-4">
+              <Image
+                src={logo}
+                alt="Stramco Solutions"
+                width={50}
+                height={50}
+                className="object-contain"
+              />
+              <h2 className="text-lg font-semibold text-gray-100">
+                Stramco <span className="text-gray-400">Solutions</span>
+              </h2>
+            </div>
+            <p className="text-gray-400">
               Strategic Management Experts That Care. Transforming businesses
               through comprehensive consultancy and HR solutions.
             </p>
@@ -14,38 +43,43 @@ export function Footer() {
 
           {/* Services */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Services</h4>
+            <h4 className="text-lg font-semibold mb-4 text-gray-100">
+              Services
+            </h4>
             <ul className="space-y-2 text-gray-300">
               <li>
                 <a
                   href="/strategic-management"
-                  className="hover:text-white transition-colors"
+                  className="flex items-center gap-2 hover:text-[#3B82F6] transition-colors"
                 >
-                  Strategic Management
+                  <Briefcase className="w-4 h-4 text-[#3B82F6]" /> Strategic
+                  Management
                 </a>
               </li>
               <li>
                 <a
                   href="/hr-services"
-                  className="hover:text-white transition-colors"
+                  className="flex items-center gap-2 hover:text-[#3B82F6] transition-colors"
                 >
-                  Human Resource Services
+                  <Users className="w-4 h-4 text-[#3B82F6]" /> Human Resource
+                  Services
                 </a>
               </li>
               <li>
                 <a
                   href="/training-development"
-                  className="hover:text-white transition-colors"
+                  className="flex items-center gap-2 hover:text-[#3B82F6] transition-colors"
                 >
-                  Training & Development
+                  <GraduationCap className="w-4 h-4 text-[#3B82F6]" /> Training
+                  & Development
                 </a>
               </li>
               <li>
                 <a
                   href="/careers"
-                  className="hover:text-white transition-colors"
+                  className="flex items-center gap-2 hover:text-[#3B82F6] transition-colors"
                 >
-                  Careers
+                  <ClipboardList className="w-4 h-4 text-[#3B82F6]" /> Careers
                 </a>
               </li>
             </ul>
@@ -53,42 +87,60 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Contact</h4>
+            <h4 className="text-lg font-semibold mb-4 text-gray-100">
+              Contact
+            </h4>
             <ul className="space-y-2 text-gray-300">
-              <li>Email: info@stramcosolutions.com</li>
-              <li>Phone: +254 700 000 000</li>
-              <li>Address: Nairobi, Kenya</li>
+              <li className="flex items-center gap-2">
+                <Mail className="w-4 h-4 text-[#3B82F6]" />{" "}
+                info@stramcosolutions.com
+              </li>
+              <li className="flex items-center gap-2">
+                <Phone className="w-4 h-4 text-[#3B82F6]" /> +254 796-363-275
+              </li>
+              <li className="flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-[#3B82F6]" /> Vision House
+                Plaza, Mombasa Road, Kenya
+              </li>
             </ul>
           </div>
 
           {/* Follow Us */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Follow Us</h4>
+            <h4 className="text-lg font-semibold mb-4 text-gray-100">
+              Follow Us
+            </h4>
             <div className="flex space-x-4">
               <a
                 href="#"
-                className="text-gray-300 hover:text-white transition-colors"
+                className="p-2 rounded-full bg-gray-800 hover:bg-[#3B82F6] transition"
               >
-                LinkedIn
+                <Linkedin className="w-5 h-5" />
               </a>
               <a
                 href="#"
-                className="text-gray-300 hover:text-white transition-colors"
+                className="p-2 rounded-full bg-gray-800 hover:bg-[#60A5FA] transition"
               >
-                Twitter
+                <Twitter className="w-5 h-5" />
               </a>
               <a
                 href="#"
-                className="text-gray-300 hover:text-white transition-colors"
+                className="p-2 rounded-full bg-gray-800 hover:bg-[#2563EB] transition"
               >
-                Facebook
+                <Facebook className="w-5 h-5" />
+              </a>
+              <a
+                href="#"
+                className="p-2 rounded-full bg-gray-800 hover:bg-[#2563EB] transition"
+              >
+                <Instagram className="w-5 h-5" />
               </a>
             </div>
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-300">
-          <p>&copy; 2024 Stramco Solutions. All rights reserved.</p>
+        <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400 text-sm">
+          <p>&copy; 2025 Made with 💜 by redevops. All rights reserved.</p>
         </div>
       </div>
     </footer>

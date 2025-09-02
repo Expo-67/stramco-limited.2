@@ -1,3 +1,4 @@
+"use client";
 import { Header } from "./components/header";
 import { HeroSection } from "./components/hero-section";
 import { ServicesSection } from "./components/services-section";

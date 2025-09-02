@@ -1,3 +1,4 @@
+"use client";
 export function TrustedCompanies() {
   const companies = [
     "Microsoft",
@@ -9,13 +10,13 @@ export function TrustedCompanies() {
   ];
 
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16 bg-[#F3F4F6]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl font-bold text-[#111827] mb-4">
             Trusted by Leading Companies
           </h2>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-[#9CA3AF]">
             We've helped organizations across various industries achieve their
             goals
           </p>
@@ -24,7 +25,7 @@ export function TrustedCompanies() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
           {companies.map((company) => (
             <div key={company} className="flex items-center justify-center">
-              <div className="text-xl font-semibold text-gray-400 hover:text-gray-600 transition-colors">
+              <div className="text-xl font-semibold text-[#9CA3AF] hover:text-[#3B82F6] transition-colors">
                 {company}
               </div>
             </div>
