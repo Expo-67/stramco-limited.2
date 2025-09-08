@@ -31,7 +31,7 @@ export function Header() {
       dropdown: [
         {
           label: "Strategic Management",
-          href: "/strategic-management",
+          href: "/pages/Strategymanagement",
           icon: Briefcase,
         },
         {
@@ -41,18 +41,18 @@ export function Header() {
         },
         {
           label: "Training and Development",
-          href: "/training-development",
+          href: "/pages/traininganddev",
           icon: GraduationCap,
         },
         { label: "Careers", href: "/careers", icon: ClipboardList },
       ],
     },
     { label: "Recruitment", href: "/recruitment" },
-    { label: "Strategic Management", href: "/strategic-management" },
-    { label: "Training & Development", href: "/training-development" },
+    { label: "Strategic Management", href: "/pages/Strategymanagement" },
+    { label: "Training & Development", href: "/pages/traininganddev" },
     { label: "Job Vacancy", href: "/job-vacancy" },
     { label: "Corporate Staffing", href: "/corporate-staffing" },
-    { label: "Contact Us", href: "/contact" },
+    { label: "Contact Us", href: "/pages/contact-us" },
   ];
 
   return (

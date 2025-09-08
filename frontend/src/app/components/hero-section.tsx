@@ -1,3 +1,4 @@
+"use client";
 import { StatsCard } from "../components/stats-card";
 import Image from "next/image";
 import backgroundImage from "../images/back 2.jpg";

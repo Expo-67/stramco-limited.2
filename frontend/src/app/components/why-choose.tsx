@@ -1,3 +1,4 @@
+"use client";
 import { CheckCircle, Users, Target, Award } from "lucide-react";
 
 export function WhyChoose() {
