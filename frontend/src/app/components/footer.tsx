@@ -15,6 +15,7 @@ import {
   Instagram,
 } from "lucide-react";
 import logo from "../images/logo-black.png";
+import Link from "next/link";
 
 export function Footer() {
   return (
@@ -48,39 +49,40 @@ export function Footer() {
             </h4>
             <ul className="space-y-2 text-gray-300">
               <li>
-                <a
-                  href="/strategic-management"
+                <Link
+                  href="/pages/Strategymanagement"
                   className="flex items-center gap-2 hover:text-[#3B82F6] transition-colors"
                 >
                   <Briefcase className="w-4 h-4 text-[#3B82F6]" /> Strategic
                   Management
-                </a>
+                </Link>
               </li>
               <li>
-                <a
+                <Link
                   href="/hr-services"
                   className="flex items-center gap-2 hover:text-[#3B82F6] transition-colors"
                 >
                   <Users className="w-4 h-4 text-[#3B82F6]" /> Human Resource
                   Services
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/training-development"
+                <Link
+                  href="/pages/traininganddev"
                   className="flex items-center gap-2 hover:text-[#3B82F6] transition-colors"
                 >
                   <GraduationCap className="w-4 h-4 text-[#3B82F6]" /> Training
                   & Development
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/careers"
+                <Link
+                  href="/pages/jobvaccancy"
                   className="flex items-center gap-2 hover:text-[#3B82F6] transition-colors"
                 >
-                  <ClipboardList className="w-4 h-4 text-[#3B82F6]" /> Careers
-                </a>
+                  <Briefcase className="w-4 h-4 text-[#3B82F6]" />{" "}
+                  Job-Vaccancies
+                </Link>
               </li>
             </ul>
           </div>
@@ -111,30 +113,25 @@ export function Footer() {
               Follow Us
             </h4>
             <div className="flex space-x-4">
-              <a
+              <Link
                 href="#"
                 className="p-2 rounded-full bg-gray-800 hover:bg-[#3B82F6] transition"
               >
                 <Linkedin className="w-5 h-5" />
-              </a>
-              <a
+              </Link>
+              <Link
                 href="#"
                 className="p-2 rounded-full bg-gray-800 hover:bg-[#60A5FA] transition"
               >
                 <Twitter className="w-5 h-5" />
-              </a>
-              <a
-                href="#"
-                className="p-2 rounded-full bg-gray-800 hover:bg-[#2563EB] transition"
-              >
-                <Facebook className="w-5 h-5" />
-              </a>
-              <a
+              </Link>
+
+              <Link
                 href="#"
                 className="p-2 rounded-full bg-gray-800 hover:bg-[#2563EB] transition"
               >
                 <Instagram className="w-5 h-5" />
-              </a>
+              </Link>
             </div>
           </div>
         </div>
