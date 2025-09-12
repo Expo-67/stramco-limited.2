@@ -1,12 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { Building2, Briefcase, Edit, Trash, Plus, Menu } from "lucide-react";
-import logo from "../../images/logo-black.png";
+import { Building2, Edit, Trash, Plus } from "lucide-react";
 
-// Mock data for companies
+// Mock data
 const mockCompanies = [
   {
     id: 1,
@@ -24,134 +21,203 @@ const mockCompanies = [
     dateAdded: "2025-09-08",
     jobs: 5,
   },
-  {
-    id: 3,
-    name: "Finance Solutions",
-    industry: "Finance",
-    location: "Kisumu, Kenya",
-    dateAdded: "2025-09-05",
-    jobs: 8,
-  },
 ];
 
 export default function CompaniesPage() {
   const [companies, setCompanies] = useState(mockCompanies);
+  const [isAddOpen, setIsAddOpen] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [selectedCompany, setSelectedCompany] = useState(null);
 
+  // Delete
   const handleDelete = (id) => {
     setCompanies(companies.filter((company) => company.id !== id));
   };
 
+  // Add
+  const handleAddCompany = (newCompany) => {
+    setCompanies([...companies, { ...newCompany, id: Date.now() }]);
+    setIsAddOpen(false);
+  };
+
+  // Edit
+  const handleEditCompany = (updatedCompany) => {
+    setCompanies(
+      companies.map((c) => (c.id === updatedCompany.id ? updatedCompany : c))
+    );
+    setIsEditOpen(false);
+  };
+
   return (
-    <div className="flex min-h-screen bg-gray-100 text-gray-800">
-      {/* Sidebar */}
-      <aside className="hidden md:flex flex-col w-64 bg-white border-r">
-        <div className="flex items-center justify-start h-24 border-b px-4 gap-3">
-          <Image
-            src={logo}
-            alt="Stramco Logo"
-            width={80}
-            height={40}
-            priority
-          />
-          <h1 className="text-xl font-bold text-gray-900">Stramco</h1>
-        </div>
-        <nav className="flex-1 p-4 space-y-2 text-gray-700 font-medium">
-          <Link
-            href="/dashboard"
-            className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 transition"
-          >
-            <Building2 size={20} /> <span>Companies</span>
-          </Link>
-          <Link
-            href="/admin/Companies"
-            className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 transition"
-          >
-            <Briefcase size={20} /> <span>Jobs</span>
-          </Link>
-          <Link
-            href="/profile"
-            className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 transition"
-          >
-            <Edit size={20} /> <span>Profile</span>
-          </Link>
-        </nav>
-      </aside>
+    <div className="p-6 space-y-6">
+      {/* Header */}
+      <div className="flex justify-between items-center">
+        <h2 className="text-xl font-semibold flex items-center gap-2">
+          <Building2 size={22} className="text-gray-700" /> Companies
+        </h2>
+        <button
+          onClick={() => setIsAddOpen(true)}
+          className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+        >
+          <Plus size={18} /> Add Company
+        </button>
+      </div>
 
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col">
-        {/* Topbar */}
-        <header className="flex items-center justify-between bg-white border-b px-6 py-4">
-          <div className="flex items-center gap-3">
-            <Menu className="md:hidden" />
-            <h2 className="text-lg font-semibold">Companies</h2>
-          </div>
-          <button className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-900 transition">
-            <Plus size={16} /> Add Company
+      {/* Table */}
+      <div className="overflow-x-auto bg-white rounded-2xl shadow">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                Company Name
+              </th>
+              <th className="px-6 py-3  text-left text-xs font-medium text-gray-500 uppercase">
+                Industry
+              </th>
+              <th className="px-6 py-3  text-left text-xs font-medium text-gray-500 uppercase">
+                Location
+              </th>
+              <th className="px-6 py-3px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                Date Added
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                Jobs
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {companies.map((company) => (
+              <tr key={company.id} className="hover:bg-gray-50 transition">
+                <td className="px-6 py-4">{company.name}</td>
+                <td className="px-6 py-4">{company.industry}</td>
+                <td className="px-6 py-4">{company.location}</td>
+                <td className="px-6 py-4">{company.dateAdded}</td>
+                <td className="px-6 py-4">{company.jobs}</td>
+                <td className="px-6 py-4 flex gap-3">
+                  <button
+                    className="text-blue-600 hover:text-blue-800"
+                    onClick={() => {
+                      setSelectedCompany(company);
+                      setIsEditOpen(true);
+                    }}
+                  >
+                    <Edit size={18} />
+                  </button>
+                  <button
+                    className="text-red-600 hover:text-red-800"
+                    onClick={() => handleDelete(company.id)}
+                  >
+                    <Trash size={18} />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Add Modal */}
+      {isAddOpen && (
+        <Modal title="Add New Company" onClose={() => setIsAddOpen(false)}>
+          <p>Create a new company profile for Job postings</p>
+          <CompanyForm onSave={handleAddCompany} />
+        </Modal>
+      )}
+
+      {/* Edit Modal */}
+      {isEditOpen && selectedCompany && (
+        <Modal title="Edit Company" onClose={() => setIsEditOpen(false)}>
+          <CompanyForm company={selectedCompany} onSave={handleEditCompany} />
+        </Modal>
+      )}
+    </div>
+  );
+}
+
+/* 🔹 Reusable Modal */
+function Modal({ title, children, onClose }) {
+  return (
+    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+      <div className="bg-white rounded-lg shadow-lg w-full max-w-lg p-6">
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-lg font-semibold">{title}</h3>
+          <button
+            onClick={onClose}
+            className="text-gray-500 hover:text-gray-700"
+          >
+            ✖
           </button>
-        </header>
-
-        {/* Table */}
-        <main className="flex-1 p-6">
-          <div className="overflow-x-auto bg-white rounded-2xl shadow">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Company Name
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Industry
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Location
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Date Added
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Jobs
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {companies.map((company) => (
-                  <tr key={company.id} className="hover:bg-gray-50 transition">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {company.name}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {company.industry}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {company.location}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {company.dateAdded}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {company.jobs}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap flex gap-3">
-                      <button className="text-blue-600 hover:text-blue-800">
-                        <Edit size={18} />
-                      </button>
-                      <button
-                        className="text-red-600 hover:text-red-800"
-                        onClick={() => handleDelete(company.id)}
-                      >
-                        <Trash size={18} />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </main>
+        </div>
+        {children}
       </div>
     </div>
+  );
+}
+
+/* 🔹 Company Form */
+function CompanyForm({ company = {}, onSave }) {
+  const [form, setForm] = useState({
+    id: company.id || null,
+    name: company.name || "",
+    industry: company.industry || "",
+    location: company.location || "",
+    dateAdded: company.dateAdded || new Date().toISOString().slice(0, 10),
+    jobs: company.jobs || 0,
+  });
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  return (
+    <form
+      className="space-y-4"
+      onSubmit={(e) => {
+        e.preventDefault();
+        onSave(form);
+      }}
+    >
+      <input
+        type="text"
+        name="name"
+        placeholder="Enter company name"
+        value={form.name}
+        onChange={handleChange}
+        className="w-full p-2 border rounded"
+      />
+      <input
+        type="text"
+        name="industry"
+        placeholder="e.g Banking, Technology"
+        value={form.industry}
+        onChange={handleChange}
+        className="w-full p-2 border rounded"
+      />
+      <input
+        type="text"
+        name="location"
+        placeholder="e.g, Westlands Nairobi "
+        value={form.location}
+        onChange={handleChange}
+        className="w-full p-2 border rounded"
+      />
+      <input
+        type="number"
+        name="jobs"
+        placeholder="Jobs"
+        value={form.jobs}
+        onChange={handleChange}
+        className="w-full p-2 border rounded"
+      />
+      <button
+        type="submit"
+        className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
+      >
+        Add Company
+      </button>
+    </form>
   );
 }

@@ -1,15 +1,12 @@
 "use client";
 
 import React from "react";
-import { Header } from "../../components/header";
-import { Footer } from "../../components/footer";
+
 import { ContactForm } from "../../components/contact-form";
 
 export default function ContactPage() {
   return (
     <div className="min-h-screen flex flex-col">
-      <Header />
-
       <main className="flex-grow">
         <div className="max-w-3xl mx-auto p-6">
           <h1 className="text-3xl font-bold mb-6 text-center text-gray-900">
@@ -22,8 +19,6 @@ export default function ContactPage() {
           <ContactForm />
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

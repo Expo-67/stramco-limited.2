@@ -36,7 +36,7 @@ export function Header() {
         },
         {
           label: "Human Resource Services",
-          href: "/hr-services",
+          href: "/pages/humanresourceservices",
           icon: Users,
         },
         {
@@ -44,14 +44,33 @@ export function Header() {
           href: "/pages/traininganddev",
           icon: GraduationCap,
         },
-        { label: "Careers", href: "/careers", icon: ClipboardList },
+        {
+          label: "Corporate Staffing",
+          href: "/pages/corporatestaffing",
+          icon: ClipboardList,
+        },
       ],
     },
-    { label: "Recruitment", href: "/recruitment" },
+
+    {
+      label: "About Stramco ",
+      href: "/pages/About-us",
+      dropdown: [
+        {
+          label: "Our Mission",
+          href: "/pages/About-us",
+          icon: Briefcase,
+        },
+        {
+          label: "Our Vision",
+          href: "/pages/About-us",
+          icon: Users,
+        },
+      ],
+    },
     { label: "Strategic Management", href: "/pages/Strategymanagement" },
     { label: "Training & Development", href: "/pages/traininganddev" },
     { label: "Job Vacancy", href: "/pages/jobvaccancy" },
-    { label: "Corporate Staffing", href: "/corporate-staffing" },
     { label: "Contact Us", href: "/pages/contact-us" },
   ];
 
