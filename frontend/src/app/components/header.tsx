@@ -28,28 +28,6 @@ export function Header() {
     {
       label: "Services",
       href: "#",
-      dropdown: [
-        {
-          label: "Strategic Management",
-          href: "/pages/Strategymanagement",
-          icon: Briefcase,
-        },
-        {
-          label: "Human Resource Services",
-          href: "/pages/humanresourceservices",
-          icon: Users,
-        },
-        {
-          label: "Training and Development",
-          href: "/pages/traininganddev",
-          icon: GraduationCap,
-        },
-        {
-          label: "Corporate Staffing",
-          href: "/pages/corporatestaffing",
-          icon: ClipboardList,
-        },
-      ],
     },
 
     {

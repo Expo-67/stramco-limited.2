@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import {
   Card,
   CardContent,
@@ -8,8 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Users, Target, TrendingUp, Briefcase } from "lucide-react";
+import { Users, Target, TrendingUp, Briefcase, Building2 } from "lucide-react";
 
 export function ServicesSection() {
   const [visibleCards, setVisibleCards] = useState<number[]>([]);
@@ -21,76 +20,62 @@ export function ServicesSection() {
       title: "HR Outsourcing",
       description:
         "Comprehensive HR solutions including recruitment, talent management, and organizational development to build strong teams.",
-      features: [
-        "Recruitment and selection",
-        "Training,Development and Research",
-      ],
+      features: ["Recruitment and Selection", "Training & Development"],
     },
     {
       icon: Users,
       title: "HR Consultancy",
       description:
-        "hR advisory services to optimize workforce performance, enhance employee engagement, and align HR strategies with business goals.",
-      features: [
-        "Interviewing Dos and Donts",
-        "Workplace Policies and Procedures",
-      ],
+        "HR advisory services to optimize workforce performance, enhance engagement, and align strategies with business goals.",
+      features: ["Interviewing Guidelines", "Workplace Policies"],
     },
     {
       icon: TrendingUp,
       title: "HR Audit",
       description:
-        "Hr audit being an investigative, analytical, and comparative process that attempts to reflect the effectiveness of the HR function.",
+        "Investigative and analytical HR audit services to assess and enhance the effectiveness of HR functions.",
       features: ["Leadership Development", "Skills Training"],
     },
     {
       icon: Briefcase,
-      title: "Recruitment Services & Staffing",
+      title: "Recruitment & Staffing",
       description:
-        "End-to-end recruitment and staffing solutions to attract, evaluate, and onboard top talent that drives organizational success.",
+        "End-to-end recruitment and staffing solutions to attract, evaluate, and onboard top talent for organizational success.",
       features: ["Career Counseling", "Job Placement"],
+    },
+    {
+      icon: Building2,
+      title: "Payroll Processing",
+      description:
+        "Flexible payroll outsourcing services that save time, ensure compliance, reduce costs, and minimize errors for businesses.",
+      features: ["Time & Cost Savings", "Labor Law Compliance"],
+    },
+    {
+      icon: Users,
+      title: "Workload Analysis",
+      description:
+        "Customized programs to allocate tasks effectively, optimize resources, and promote employee well-being.",
+      features: ["Resource Optimization", "Employee Well-being"],
     },
   ];
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            // Stagger the animation of cards
-            services.forEach((_, index) => {
-              setTimeout(() => {
-                setVisibleCards((prev) => [...prev, index]);
-              }, index * 200); // 200ms delay between each card
-            });
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <section ref={sectionRef} className="py-16 bg-[#F3F4F6]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12 opacity-0 animate-fade-in-up">
-          <h2 className="text-3xl font-bold text-[#111827] mb-4">
+    <section ref={sectionRef} className="py-20 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="text-center mb-16 opacity-0 animate-fade-in-up">
+          <h2 className="text-4xl font-extrabold text-gray-900 mb-4">
             Our Human Resource Services
           </h2>
-          <p className="text-lg text-[#9CA3AF] max-w-3xl mx-auto">
-            We provide comprehensive business solutions designed to transform
-            your organization and drive sustainable growth through strategic
-            expertise and innovative approaches.
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            We provide business solutions designed to transform your
+            organization and drive sustainable growth through strategic
+            expertise and innovation.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* Services Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
           {services.map((service, index) => {
             const IconComponent = service.icon;
             const isVisible = visibleCards.includes(index);
@@ -98,58 +83,61 @@ export function ServicesSection() {
             return (
               <Card
                 key={index}
-                className={`h-full transition-all duration-700 ease-out transform hover:scale-105 hover:shadow-xl group cursor-pointer border-0 shadow-lg ${
+                className={`h-full border-0 shadow-lg transition-all duration-700 ease-out transform hover:scale-105 hover:shadow-xl group cursor-pointer ${
                   isVisible
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-8"
                 }`}
-                style={{
-                  transitionDelay: `${index * 100}ms`,
+                style={{ transitionDelay: `${index * 150}ms` }}
+                ref={(el) => {
+                  if (el) {
+                    const observer = new IntersectionObserver(
+                      ([entry]) => {
+                        if (entry.isIntersecting) {
+                          setVisibleCards((prev) =>
+                            prev.includes(index) ? prev : [...prev, index]
+                          );
+                          observer.unobserve(el);
+                        }
+                      },
+                      { threshold: 0.2 }
+                    );
+                    observer.observe(el);
+                  }
                 }}
               >
-                <CardHeader className="text-center relative overflow-hidden">
-                  <div className="mx-auto mb-4 p-4 bg-gradient-to-br from-[#3B82F6] to-[#60A5FA] rounded-full w-fit transform transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 shadow-lg">
+                <CardHeader className="text-center relative">
+                  <div className="mx-auto mb-5 p-5 bg-gradient-to-br from-blue-500 to-blue-400 rounded-full shadow-lg transform transition duration-300 group-hover:scale-110 group-hover:rotate-6">
                     <IconComponent className="h-8 w-8 text-white" />
                   </div>
-                  <CardTitle className="text-xl mb-2 text-[#111827] group-hover:text-[#3B82F6] transition-colors duration-300">
+                  <CardTitle className="text-xl font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
                     {service.title}
                   </CardTitle>
-                  <CardDescription className="text-sm text-[#9CA3AF] group-hover:text-[#111827] transition-colors duration-300">
+                  <CardDescription className="mt-2 text-sm text-gray-500 group-hover:text-gray-700">
                     {service.description}
                   </CardDescription>
-
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#3B82F6]/5 to-[#60A5FA]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
                 </CardHeader>
-                <CardContent className="relative">
-                  <ul className="space-y-3 mb-6">
+                <CardContent>
+                  <ul className="space-y-3">
                     {service.features.map((feature, featureIndex) => (
                       <li
                         key={featureIndex}
-                        className={`text-sm text-[#111827] flex items-center transform transition-all duration-300 ${
+                        className={`flex items-center text-sm text-gray-700 transition-all ${
                           isVisible
                             ? "opacity-100 translate-x-0"
                             : "opacity-0 -translate-x-4"
                         }`}
                         style={{
                           transitionDelay: `${
-                            index * 100 + featureIndex * 50
+                            index * 150 + featureIndex * 75
                           }ms`,
                         }}
                       >
-                        <div className="w-2 h-2 bg-gradient-to-r from-[#3B82F6] to-[#60A5FA] rounded-full mr-3 flex-shrink-0 transform transition-all duration-300 group-hover:scale-125"></div>
-                        <span className="group-hover:translate-x-1 transition-transform duration-300">
-                          {feature}
-                        </span>
+                        <span className="w-2 h-2 mr-3 rounded-full bg-gradient-to-r from-blue-500 to-blue-400"></span>
+                        {feature}
                       </li>
                     ))}
                   </ul>
-
-                  <Button
-                    variant="outline"
-                    className="w-full bg-transparent border-[#3B82F6] text-[#3B82F6] hover:bg-[#3B82F6] hover:text-white transition-all duration-300 transform hover:scale-105 hover:shadow-lg group-hover:border-[#60A5FA] group-hover:text-[#60A5FA] hover:bg-gradient-to-r hover:from-[#3B82F6] hover:to-[#60A5FA]"
-                  >
-                    <span className="relative z-10">Learn More</span>
-                  </Button>
                 </CardContent>
               </Card>
             );
@@ -157,6 +145,7 @@ export function ServicesSection() {
         </div>
       </div>
 
+      {/* Animations */}
       <style jsx>{`
         @keyframes fade-in-up {
           from {
@@ -168,7 +157,6 @@ export function ServicesSection() {
             transform: translateY(0);
           }
         }
-
         .animate-fade-in-up {
           animation: fade-in-up 0.8s ease-out forwards;
           animation-delay: 0.2s;

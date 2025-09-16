@@ -7,12 +7,13 @@ import { WhyChoose } from "./components/why-choose";
 import { FAQ } from "./components/faq";
 import { Footer } from "./components/footer";
 import { TrustedCompanies } from "./components/trusted-companies";
-
+import Companies from "./components/companies";
 export default function HomePage() {
   return (
     <main className="min-h-screen">
       <Header />
       <HeroSection />
+      <Companies />
       <ServicesSection />
       <TrustedCompanies />
       <Testimonials />

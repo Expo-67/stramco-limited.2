@@ -7,7 +7,7 @@ export function WhyChoose() {
       icon: CheckCircle,
       title: "Proven Track Record",
       description:
-        "Over 23 Kenyan companies trust us with their strategic management and HR needs",
+        "Over 5+ Kenyan companies trust us with their strategic management and HR needs",
     },
     {
       icon: Users,
@@ -25,7 +25,7 @@ export function WhyChoose() {
       icon: Award,
       title: "Quality Results",
       description:
-        "140+ professionals successfully placed with measurable impact on business growth",
+        "10+ professionals successfully placed with measurable impact on business growth",
     },
   ];
 

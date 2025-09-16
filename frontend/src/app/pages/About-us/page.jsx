@@ -1,8 +1,7 @@
 "use client";
 
 import { Users, Target, Eye, ShieldCheck } from "lucide-react";
-import Image from "next/image";
-import team from "../../images/team.jpg";
+
 import Link from "next/link";
 
 export default function AboutPage() {
@@ -84,25 +83,6 @@ export default function AboutPage() {
               <li>✔ Customer Focus</li>
             </ul>
           </div>
-        </div>
-      </section>
-
-      {/* Meet Our Team */}
-      <section className="max-w-6xl mx-auto px-6 py-16 text-center">
-        <h2 className="text-2xl font-bold mb-6">Meet Our Team</h2>
-        <p className="text-gray-600 mb-10 max-w-2xl mx-auto">
-          Behind every success story is a team of passionate professionals. Our
-          consultants bring expertise, innovation, and dedication to help
-          organizations achieve lasting impact.
-        </p>
-        <div className="flex justify-center">
-          <Image
-            src={team}
-            alt="Our Team"
-            width={900}
-            height={500}
-            className="rounded-xl shadow-lg"
-          />
         </div>
       </section>
 
