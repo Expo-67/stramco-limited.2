@@ -1,0 +1,24 @@
+import express from "express";
+import dotenv from "dotenv";
+import { connectDatabase } from "./db/connectDB.js"; // imported as connectDatabase
+import cookieParser from "cookie-parser";
+import authRoutes from "./routes/auth.routes.js";
+
+dotenv.config(); // Load environment variables
+const app = express();
+const PORT = process.env.PORT || 5004;
+
+// Connect to database once
+connectDatabase();
+
+// Middleware
+app.use(express.json());
+app.use(cookieParser());
+
+// Routes
+app.use("/api/auth", authRoutes);
+
+// Start server
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`🚀 Server is running on port: ${PORT}`);
+});

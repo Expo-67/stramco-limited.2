@@ -4,22 +4,22 @@ import { Card, CardContent } from "@/components/ui/card";
 export function Testimonials() {
   const testimonials = [
     {
-      name: "Sarah Johnson",
-      position: "CEO, TechCorp",
+      name: "Daniel Kimari",
+      position: "Founder Mtaani Telecom",
       content:
         "Stramco Solutions transformed our HR processes completely. Their strategic approach helped us scale efficiently while maintaining our company culture.",
       rating: 5,
     },
     {
-      name: "Michael Chen",
-      position: "HR Director, InnovateLtd",
+      name: "Mishael Benjamin",
+      position: "Founder Midon Stores",
       content:
         "The recruitment services provided by Stramco are exceptional. They found us the perfect candidates who fit both our technical requirements and company values.",
       rating: 5,
     },
     {
-      name: "Emily Rodriguez",
-      position: "Founder, StartupXYZ",
+      name: "Brian Mageto",
+      position: "Founder, Maisha HomeBroadband",
       content:
         "Their strategic management consultancy was exactly what we needed. The team provided actionable insights that drove real business results.",
       rating: 5,
