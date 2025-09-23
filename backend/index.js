@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import { connectDatabase } from "./db/connectDB.js"; // imported as connectDatabase
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.routes.js";
+import companyRoutes from "./routes/company.routes.js";
+import jobRoutes from "./routes/job.routes.js";
 
 dotenv.config(); // Load environment variables
 const app = express();
@@ -17,6 +19,8 @@ app.use(cookieParser());
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/companies", companyRoutes);
+app.use("/api/jobs", jobRoutes);
 
 // Start server
 app.listen(PORT, "0.0.0.0", () => {
