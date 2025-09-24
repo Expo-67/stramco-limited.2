@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.routes.js";
 import companyRoutes from "./routes/company.routes.js";
 import jobRoutes from "./routes/job.routes.js";
+import cors from "cors";
 
 dotenv.config(); // Load environment variables
 const app = express();
@@ -16,6 +17,12 @@ connectDatabase();
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
+app.use(
+  cors({
+    origin: "http://localhost:3000", // Replace with your frontend URL
+    credentials: true, // Allow cookies to be sent
+  })
+);
 
 // Routes
 app.use("/api/auth", authRoutes);

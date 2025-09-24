@@ -2,6 +2,9 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import useAuthStore from "../../../../store/useAuthStore.js";
+import { useToast } from "@/hooks/use-toast";
 import {
   Building2,
   Briefcase,
@@ -16,8 +19,27 @@ import logo from "../../images/logo-black.png";
 import profile from "../../images/profilepic.png";
 
 export default function SidebarLayout({ children }) {
-  const [user] = useState("Jackson");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { user, logout } = useAuthStore();
+  const router = useRouter();
+  const { toast } = useToast();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      toast({
+        title: "🚪 Logged out",
+        description: "log out done.",
+      });
+      router.push("/admin/Login");
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "❌ Logout failed",
+        description: "An error occurred while logging out.",
+      });
+    }
+  };
 
   return (
     <div className="flex min-h-screen bg-gray-100 text-gray-800">
@@ -59,12 +81,12 @@ export default function SidebarLayout({ children }) {
           >
             <User size={20} /> Profile
           </Link>
-          <Link
-            href="/admin/Login"
-            className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 transition"
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 transition w-full text-left"
           >
             <DoorClosed size={20} /> Logout
-          </Link>
+          </button>
         </nav>
       </aside>
 
@@ -129,12 +151,12 @@ export default function SidebarLayout({ children }) {
               >
                 <User size={20} /> Profile
               </Link>
-              <Link
-                href="/admin/Login"
-                className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 transition"
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 transition w-full text-left"
               >
                 <DoorClosed size={20} /> Logout
-              </Link>
+              </button>
             </nav>
           </aside>
         </div>
@@ -152,7 +174,8 @@ export default function SidebarLayout({ children }) {
               <Menu size={24} />
             </button>
             <h2 className="text-lg font-semibold">
-              Welcome, <span className="text-gray-900">{user}</span>
+              Welcome,{" "}
+              <span className="text-gray-900">{user?.fullname || "User"}</span>
             </h2>
           </div>
 

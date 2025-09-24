@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -8,10 +8,56 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Eye, EyeOff } from "lucide-react";
 import logo from "../../images/logo-black.png";
+import useAuthStore from "../../../../store/useAuthStore.js";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/use-toast";
 
 function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    fullname: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const { signup, loading, error, user } = useAuthStore();
+  const router = useRouter();
+  const { toast } = useToast();
+
+  const handleChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (formData.password !== formData.confirmPassword) {
+      toast({
+        variant: "destructive",
+        title: "❌ Passwords do not match",
+      });
+      return;
+    }
+
+    await signup(formData.fullname, formData.email, formData.password);
+  };
+
+  // ✅ Redirect immediately once user is created
+  useEffect(() => {
+    if (user) {
+      toast({
+        title: "✅ Account created successfully",
+        description: "Redirecting to login page...",
+      });
+
+      router.push("/admin/Login"); // no timer, instant redirect
+    }
+  }, [user, router, toast]);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-50 to-blue-100 p-4">
@@ -39,25 +85,34 @@ function SignupPage() {
             </div>
 
             {/* Form */}
-            <form className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <Input
+                name="fullname"
                 type="text"
-                placeholder="Full Name"
+                placeholder="Your full Name"
                 className="rounded-xl"
                 required
+                value={formData.fullname}
+                onChange={handleChange}
               />
               <Input
+                name="email"
                 type="email"
                 placeholder="Email Address"
                 className="rounded-xl"
                 required
+                value={formData.email}
+                onChange={handleChange}
               />
               <div className="relative">
                 <Input
+                  name="password"
                   type={showPassword ? "text" : "password"}
                   placeholder="Password"
                   className="rounded-xl pr-10"
                   required
+                  value={formData.password}
+                  onChange={handleChange}
                 />
                 <button
                   type="button"
@@ -70,10 +125,13 @@ function SignupPage() {
               </div>
               <div className="relative">
                 <Input
+                  name="confirmPassword"
                   type={showConfirmPassword ? "text" : "password"}
                   placeholder="Confirm Password"
                   className="rounded-xl pr-10"
                   required
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
                 />
                 <button
                   type="button"
@@ -89,7 +147,18 @@ function SignupPage() {
                 </button>
               </div>
 
-              <Button className="w-full rounded-xl mt-2">Sign Up</Button>
+              {/* Show backend error */}
+              {error && (
+                <p className="text-red-500 text-sm font-medium">{error}</p>
+              )}
+
+              <Button
+                type="submit"
+                disabled={loading}
+                className="w-full rounded-xl mt-2"
+              >
+                {loading ? "Signing up..." : "Sign Up"}
+              </Button>
             </form>
 
             {/* Login link */}

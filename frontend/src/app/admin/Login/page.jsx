@@ -8,9 +8,47 @@ import { Input } from "@/components/ui/input";
 import logo from "../../images/logo-black.png";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
+import useAuthStore from "../../../../store/useAuthStore.js";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/use-toast";
 
 function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const { login, loading, error, user } = useAuthStore();
+  const router = useRouter();
+  const { toast } = useToast();
+
+  const handleChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const success = await login(formData.email, formData.password);
+
+    if (success) {
+      toast({
+        title: "✅ Login successful",
+        description: "Welcome back to Stramco!",
+      });
+      router.push("/admin/Dashboard");
+    } else {
+      toast({
+        variant: "destructive",
+        title: "❌ Login failed",
+        description: error || "Invalid credentials",
+      });
+    }
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-50 to-blue-100 p-4">
@@ -38,21 +76,27 @@ function LoginPage() {
             </div>
 
             {/* Form */}
-            <form className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <Input
+                name="email"
                 type="email"
                 placeholder="Email Address"
                 className="rounded-xl"
                 required
+                value={formData.email}
+                onChange={handleChange}
               />
 
               {/* Password with eye toggle */}
               <div className="relative">
                 <Input
+                  name="password"
                   type={showPassword ? "text" : "password"}
                   placeholder="Password"
                   className="rounded-xl pr-10"
                   required
+                  value={formData.password}
+                  onChange={handleChange}
                 />
                 <button
                   type="button"
@@ -64,13 +108,17 @@ function LoginPage() {
                 </button>
               </div>
 
-              <Button className="w-full rounded-xl mt-2">
-                <Link
-                  href="/admin/Dashboard"
-                  className="text-gray-200 font-medium hover:underline"
-                >
-                  Login
-                </Link>
+              {/* Show backend error if any */}
+              {error && (
+                <p className="text-red-500 text-sm font-medium">{error}</p>
+              )}
+
+              <Button
+                type="submit"
+                disabled={loading}
+                className="w-full rounded-xl mt-2"
+              >
+                {loading ? "Logging in..." : "Login"}
               </Button>
             </form>
 
