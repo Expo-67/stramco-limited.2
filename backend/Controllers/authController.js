@@ -237,3 +237,46 @@ export const resetPassword = async (req, res) => {
     res.status(500).json({ success: false, message: "Server error" });
   }
 };
+// Update Profile 📝
+export const updateUser = async (req, res) => {
+  try {
+    const userId = req.user._id; // from protect middleware
+    const { fullname, email, role, password } = req.body;
+
+    const user = await User.findById(userId).select("+password");
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    // Update fields if provided
+    if (fullname) user.fullname = fullname;
+    if (email) user.email = email;
+    if (role) user.role = role;
+
+    // If password change requested
+    if (password) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      user.password = hashedPassword;
+    }
+
+    await user.save();
+
+    // Prepare safe response (no password)
+    const userSafe = {
+      id: user._id,
+      fullname: user.fullname,
+      email: user.email,
+      role: user.role || null,
+    };
+
+    res.status(200).json({
+      success: true,
+      message: "Profile updated successfully ✅",
+      user: userSafe,
+    });
+  } catch (error) {
+    console.error("❌ Update user error:", error.message);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+};
+

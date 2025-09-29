@@ -76,6 +76,26 @@ const useAuthStore = create(
           set({ user: null });
         }
       },
+      // Update Profile 📝
+updateProfile: async (updatedData) => {
+  try {
+    set({ loading: true, error: null });
+    const { data } = await axios.put(
+      `${backendURL}/api/auth/update`,
+      updatedData,
+      { withCredentials: true }
+    );
+    set({ user: data.user, loading: false }); // update Zustand store
+    return true;
+  } catch (err) {
+    set({
+      error: err.response?.data?.message || "Update failed",
+      loading: false,
+    });
+    return false;
+  }
+},
+
     }),
     {
       name: "auth-storage", // key in localStorage

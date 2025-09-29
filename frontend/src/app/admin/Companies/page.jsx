@@ -1,50 +1,49 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Building2, Edit, Trash, Plus } from "lucide-react";
-
-// Mock data
-const mockCompanies = [
-  {
-    id: 1,
-    name: "TechCorp Ltd.",
-    industry: "IT & Software",
-    location: "Nairobi, Kenya",
-    dateAdded: "2025-09-10",
-    jobs: 12,
-  },
-  {
-    id: 2,
-    name: "Green Energy Co.",
-    industry: "Energy",
-    location: "Mombasa, Kenya",
-    dateAdded: "2025-09-08",
-    jobs: 5,
-  },
-];
+import useCompanyStore from "../../../../store/useCompanyStore.js"; // ✅ Import Zustand store
 
 export default function CompaniesPage() {
-  const [companies, setCompanies] = useState(mockCompanies);
+  const {
+    companies,
+    fetchCompanies,
+    createCompany,
+    updateCompany,
+    deleteCompany,
+    loading,
+    error,
+  } = useCompanyStore();
+
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [selectedCompany, setSelectedCompany] = useState(null);
 
+  // Fetch companies on mount
+  useEffect(() => {
+    fetchCompanies();
+  }, [fetchCompanies]);
+
   // Delete
   const handleDelete = (id) => {
-    setCompanies(companies.filter((company) => company.id !== id));
+    deleteCompany(id);
   };
 
   // Add
   const handleAddCompany = (newCompany) => {
-    setCompanies([...companies, { ...newCompany, id: Date.now() }]);
+    createCompany(
+      newCompany.name,
+      newCompany.location,
+      newCompany.email,
+      newCompany.phoneNumber,
+      newCompany.logo
+    );
     setIsAddOpen(false);
   };
 
   // Edit
   const handleEditCompany = (updatedCompany) => {
-    setCompanies(
-      companies.map((c) => (c.id === updatedCompany.id ? updatedCompany : c))
-    );
+    updateCompany(updatedCompany._id, updatedCompany);
     setIsEditOpen(false);
   };
 
@@ -63,6 +62,10 @@ export default function CompaniesPage() {
         </button>
       </div>
 
+      {/* Error & Loading */}
+      {loading && <p className="text-gray-500">Loading companies...</p>}
+      {error && <p className="text-red-500">{error}</p>}
+
       {/* Table */}
       <div className="overflow-x-auto bg-white rounded-2xl shadow">
         <table className="min-w-full divide-y divide-gray-200">
@@ -72,16 +75,13 @@ export default function CompaniesPage() {
                 Company Name
               </th>
               <th className="px-6 py-3  text-left text-xs font-medium text-gray-500 uppercase">
-                Industry
-              </th>
-              <th className="px-6 py-3  text-left text-xs font-medium text-gray-500 uppercase">
                 Location
               </th>
-              <th className="px-6 py-3px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                Date Added
+              <th className="px-6 py-3  text-left text-xs font-medium text-gray-500 uppercase">
+                Email
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                Jobs
+                Phone
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                 Actions
@@ -90,12 +90,11 @@ export default function CompaniesPage() {
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {companies.map((company) => (
-              <tr key={company.id} className="hover:bg-gray-50 transition">
+              <tr key={company._id} className="hover:bg-gray-50 transition">
                 <td className="px-6 py-4">{company.name}</td>
-                <td className="px-6 py-4">{company.industry}</td>
                 <td className="px-6 py-4">{company.location}</td>
-                <td className="px-6 py-4">{company.dateAdded}</td>
-                <td className="px-6 py-4">{company.jobs}</td>
+                <td className="px-6 py-4">{company.email}</td>
+                <td className="px-6 py-4">{company.phoneNumber}</td>
                 <td className="px-6 py-4 flex gap-3">
                   <button
                     className="text-blue-600 hover:text-blue-800"
@@ -108,7 +107,7 @@ export default function CompaniesPage() {
                   </button>
                   <button
                     className="text-red-600 hover:text-red-800"
-                    onClick={() => handleDelete(company.id)}
+                    onClick={() => handleDelete(company._id)}
                   >
                     <Trash size={18} />
                   </button>
@@ -122,7 +121,6 @@ export default function CompaniesPage() {
       {/* Add Modal */}
       {isAddOpen && (
         <Modal title="Add New Company" onClose={() => setIsAddOpen(false)}>
-          <p>Create a new company profile for Job postings</p>
           <CompanyForm onSave={handleAddCompany} />
         </Modal>
       )}
@@ -160,12 +158,12 @@ function Modal({ title, children, onClose }) {
 /* 🔹 Company Form */
 function CompanyForm({ company = {}, onSave }) {
   const [form, setForm] = useState({
-    id: company.id || null,
+    _id: company._id || null,
     name: company.name || "",
-    industry: company.industry || "",
     location: company.location || "",
-    dateAdded: company.dateAdded || new Date().toISOString().slice(0, 10),
-    jobs: company.jobs || 0,
+    email: company.email || "",
+    phoneNumber: company.phoneNumber || "",
+    logo: company.logo || "",
   });
 
   const handleChange = (e) => {
@@ -190,25 +188,33 @@ function CompanyForm({ company = {}, onSave }) {
       />
       <input
         type="text"
-        name="industry"
-        placeholder="e.g Banking, Technology"
-        value={form.industry}
-        onChange={handleChange}
-        className="w-full p-2 border rounded"
-      />
-      <input
-        type="text"
         name="location"
-        placeholder="e.g, Westlands Nairobi "
+        placeholder="e.g Westlands, Nairobi"
         value={form.location}
         onChange={handleChange}
         className="w-full p-2 border rounded"
       />
       <input
-        type="number"
-        name="jobs"
-        placeholder="Jobs"
-        value={form.jobs}
+        type="email"
+        name="email"
+        placeholder="Company email"
+        value={form.email}
+        onChange={handleChange}
+        className="w-full p-2 border rounded"
+      />
+      <input
+        type="text"
+        name="phoneNumber"
+        placeholder="Phone number"
+        value={form.phoneNumber}
+        onChange={handleChange}
+        className="w-full p-2 border rounded"
+      />
+      <input
+        type="text"
+        name="logo"
+        placeholder="Logo URL (optional)"
+        value={form.logo}
         onChange={handleChange}
         className="w-full p-2 border rounded"
       />
@@ -216,7 +222,7 @@ function CompanyForm({ company = {}, onSave }) {
         type="submit"
         className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
       >
-        Add Company
+        Save Company
       </button>
     </form>
   );

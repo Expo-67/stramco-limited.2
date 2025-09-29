@@ -14,6 +14,7 @@ export const createJob = async (req, res) => {
       location,
       deadline,
       applicationChannel,
+      status, 
     } = req.body;
 
     // Ensure company exists
@@ -34,6 +35,7 @@ export const createJob = async (req, res) => {
       location,
       deadline,
       applicationChannel,
+      status: status || "Open",
     });
 
     res.status(201).json({

@@ -40,6 +40,11 @@ const jobSchema = new mongoose.Schema(
       type: String,
       required: [true, "Application channel is required"],
     },
+    status: {
+  type: String,
+  enum: ["Open", "Closed"],
+  default: "Open",
+},
   },
   { timestamps: true }
 );
