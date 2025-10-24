@@ -1,7 +1,10 @@
-"use client";
 
 import React from "react";
 
+export const metadata ={
+  title: "Contact-us - Stramco solutions",
+  description: "Contact us at Stramco Solutions for our services."
+}
 import { ContactForm } from "../../components/contact-form";
 
 export default function ContactPage() {

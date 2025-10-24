@@ -1,5 +1,9 @@
-"use client";
+
 import React from "react";
+export const metadata = {
+  title: "Training and Development- Stramco Solutions",
+  description: "Learn more about Stramco Solutions and our training and development."
+}
 const TrainingDevelopment = () => {
   const trainingFields = [
     "Training and Development Consultancy",

@@ -19,6 +19,8 @@ import {
 import Image from "next/image";
 import { useState } from "react";
 import logo from "../images/logo-black.png";
+import Link from "next/link";
+
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -26,7 +28,7 @@ export function Header() {
   const navItems = [
     { label: "Home", href: "/" },
     {
-      label: "Services",
+      label: "HR Services",
       href: "/#services",
     },
 
@@ -86,25 +88,25 @@ export function Header() {
                         const Icon = dropdownItem.icon;
                         return (
                           <DropdownMenuItem key={dropdownItem.label} asChild>
-                            <a
+                            <Link
                               href={dropdownItem.href}
                               className="flex items-center gap-3 text-gray-700 hover:text-purple-600 w-full px-2 py-2 rounded-md transition-colors"
                             >
                               <Icon className="h-4 w-4 text-gray-400" />
                               {dropdownItem.label}
-                            </a>
+                            </Link>
                           </DropdownMenuItem>
                         );
                       })}
                     </DropdownMenuContent>
                   </DropdownMenu>
                 ) : (
-                  <a
+                  <Link
                     href={item.href}
                     className="text-gray-800 hover:text-purple-600 px-3 py-2 text-sm font-medium transition-colors"
                   >
                     {item.label}
-                  </a>
+                  </Link>
                 )}
               </div>
             ))}

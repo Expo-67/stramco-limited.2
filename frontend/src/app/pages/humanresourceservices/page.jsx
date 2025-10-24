@@ -1,4 +1,3 @@
-"use client";
 
 import {
   Users,
@@ -9,6 +8,10 @@ import {
   CheckCircle,
 } from "lucide-react";
 import Link from "next/link";
+export const metadata = {
+  title: "HR -Services- Stramco Solutions",
+  description: "Learn more about HR-Services at  Stramco Solutions and what we do."
+}
 export default function HumanResourceServicesPage() {
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900">

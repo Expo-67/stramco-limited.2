@@ -54,12 +54,28 @@ export function StatsCard({ number, label }: StatsCardProps) {
   }, [isVisible, targetNumber]);
 
   return (
-    <div ref={ref} className="text-center">
-      <div className="text-4xl md:text-5xl font-bold text-white mb-2">
+    <div 
+      ref={ref} 
+      className="text-center p-6 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 shadow-xl hover:bg-white/15 transition-all duration-300 hover:scale-105 min-w-[200px]"
+      style={{
+        filter: 'drop-shadow(0 4px 12px rgba(0, 0, 0, 0.25))'
+      }}
+    >
+      <div 
+        className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3"
+        style={{
+          filter: 'drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4))'
+        }}
+      >
         {currentNumber}
         {suffix}
       </div>
-      <div className="text-white/90 text-sm md:text-base font-medium">
+      <div 
+        className="text-white/95 text-sm sm:text-base md:text-lg font-semibold leading-tight"
+        style={{
+          filter: 'drop-shadow(0 1px 4px rgba(0, 0, 0, 0.4))'
+        }}
+      >
         {label}
       </div>
     </div>

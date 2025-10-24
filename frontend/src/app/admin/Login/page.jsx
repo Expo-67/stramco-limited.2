@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import logo from "../../images/logo-black.png";
 import { Eye, EyeOff } from "lucide-react";
-import Link from "next/link";
 import useAuthStore from "../../../../store/useAuthStore.js";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
@@ -122,16 +121,7 @@ function LoginPage() {
               </Button>
             </form>
 
-            {/* Signup link */}
-            <div className="text-center mt-4 text-sm text-gray-600">
-              Don’t have an account?{" "}
-              <Link
-                href="/admin/Signup"
-                className="text-gray-950 font-medium hover:underline"
-              >
-                Sign up
-              </Link>
-            </div>
+            
           </CardContent>
         </Card>
       </motion.div>

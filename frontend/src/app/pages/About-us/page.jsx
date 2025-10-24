@@ -1,8 +1,11 @@
-"use client";
-
 import { Users, Target, Eye, ShieldCheck } from "lucide-react";
 
 import Link from "next/link";
+
+export const metadata = {
+  title: "About Us - Stramco Solutions",
+  description: "Learn more about Stramco Solutions and what we do."
+}
 
 export default function AboutPage() {
   return (

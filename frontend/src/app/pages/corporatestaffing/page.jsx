@@ -1,8 +1,11 @@
-"use client";
 
 import { Briefcase, Users, Building2, Target, CheckCircle } from "lucide-react";
 import Link from "next/link";
 
+export const metadata = {
+  title: "Co-orperate Staffing- Stramco Solutions",
+  description: "Learn more about co-operate staffing at Stramco Solutions and what we do."
+}
 export default function CorporateStaffingPage() {
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900">
