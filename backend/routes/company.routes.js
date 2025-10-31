@@ -6,10 +6,11 @@ import {
   updateCompany,
   deleteCompany,
 } from "../Controllers/companyController.js";
+import { protect } from "../Middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.post("/", createCompany); // ➕ Create
+router.post("/", protect, createCompany); // ➕ Create
 router.get("/", getCompanies); // 📖 Get all
 router.get("/:id", getCompanyById); // 📖 Get one
 router.put("/:id", updateCompany); // ✏️ Update

@@ -11,8 +11,8 @@ export const setUserCookie = (res, userId) => {
   // 2. Set JWT in cookie
   res.cookie("user", token, {
     httpOnly: true, // prevent JS access
-    secure: process.env.NODE_ENV === "production", // HTTPS only in prod
-    sameSite: "strict",
+    secure: true, // HTTPS only in prod
+    sameSite: "none",
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in ms
   });
 };

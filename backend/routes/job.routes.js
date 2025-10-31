@@ -6,11 +6,12 @@ import {
   updateJob,
   deleteJob,
 } from "../Controllers/jobController.js";
+import { protect } from "../Middleware/authMiddleware.js";
 
 const router = express.Router();
 
 // CRUD routes
-router.post("/", createJob); // ➕ Create Job
+router.post("/", protect, createJob); // ➕ Create Job
 router.get("/", getJobs); // 📋 Get All Jobs
 router.get("/:id", getJobById); // 📌 Get Single Job
 router.put("/:id", updateJob); // ✏️ Update Job
