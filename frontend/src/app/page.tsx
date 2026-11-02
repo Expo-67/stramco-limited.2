@@ -7,7 +7,9 @@ import { WhyChoose } from "./components/why-choose";
 import { FAQ } from "./components/faq";
 import { Footer } from "./components/footer";
 import { TrustedCompanies } from "./components/trusted-companies";
+import  TrainingShowcase from "./components/training"
 import Companies from "./components/companies";
+//import Training from "./components/training";
 export default function HomePage() {
   return (
     <main className="min-h-screen">
@@ -16,6 +18,7 @@ export default function HomePage() {
       <Companies />
       <ServicesSection />
       <TrustedCompanies />
+       <TrainingShowcase/>
       <Testimonials />
       <WhyChoose />
       <FAQ />

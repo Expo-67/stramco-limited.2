@@ -10,10 +10,6 @@ dotenv.config();
 // Signup controller ✅
 export const signup = async (req, res) => {
   try {
-    return res
-        .status(403)
-        .json({ success: false, message: "Signup disabled" });
-    
     const { fullname, email, password } = req.body;
 
     // Validate input

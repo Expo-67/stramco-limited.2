@@ -25,6 +25,7 @@ function SignupPage() {
   const { signup, loading, error, user } = useAuthStore();
   const router = useRouter();
   const { toast } = useToast();
+  const [justSignedUp, setJustSignedUp] = useState(false);
 
   const handleChange = (e) => {
     setFormData((prev) => ({
@@ -45,11 +46,12 @@ function SignupPage() {
     }
 
     await signup(formData.fullname, formData.email, formData.password);
+    setJustSignedUp(true);
   };
 
-  // ✅ Redirect immediately once user is created
+  // ✅ Redirect immediately once user is created (only after signup action)
   useEffect(() => {
-    if (user) {
+    if (user && justSignedUp) {
       toast({
         title: "✅ Account created successfully",
         description: "Redirecting to login page...",
@@ -57,7 +59,7 @@ function SignupPage() {
 
       router.push("/admin/Login"); // no timer, instant redirect
     }
-  }, [user, router, toast]);
+  }, [user, justSignedUp, router, toast]);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-50 to-blue-100 p-4">
