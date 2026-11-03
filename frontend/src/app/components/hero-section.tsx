@@ -100,7 +100,8 @@ export function HeroSection() {
           className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-8 md:gap-12 px-4"
         >
           <StatsCard number="5+" label="Kenyan Companies Served" />
-          <StatsCard number="10+" label="Professionals Placed" />
+          <StatsCard number="60+" label="Professionals Placed" />
+          <StatsCard number="50+" label="Organization partnered with" />
         </motion.div>
       </div>
 
